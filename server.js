@@ -23,14 +23,18 @@ import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(express.json());
 
-// ✅ CORS setup
-app.use(cors({
-  origin: "http://localhost:3000",  
-  credentials: true,                // ✅ cookies allow
-}));
+// ✅ CORS setup (yaha rakho, routes se pehle hi)
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "https://frontend-six-sooty-32.vercel.app",
+    ],
+    credentials: true,
+  })
+);
 
 // ✅ Session setup
 app.use(
@@ -45,11 +49,13 @@ app.use(
   })
 );
 
+
 // ✅ Passport initialize
 app.use(passport.initialize());
 app.use(passport.session());
 app.use("/api/stats", statsRoutes);
 app.use("/api/recent-transactions", recentTransactionRoutes);
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use("/api/password", passwordRoutes);
 
