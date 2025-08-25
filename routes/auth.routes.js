@@ -20,12 +20,12 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    failureRedirect: "http://localhost:3000/login",
+    failureRedirect: "https://frontend-six-sooty-32.vercel.app/login",
   }),
   (req, res) => {
     try {
       if (!req.user) {
-        return res.redirect("http://localhost:3000/login?error=NoUser");
+        return res.redirect("https://frontend-six-sooty-32.vercel.app/login?error=NoUser");
       }
 
       // ✅ JWT with user info
@@ -41,13 +41,13 @@ router.get(
 
       // ✅ Redirect frontend with token + name + email
       res.redirect(
-        `http://localhost:3000/?token=${token}&name=${encodeURIComponent(
+        `https://frontend-six-sooty-32.vercel.app/?token=${token}&name=${encodeURIComponent(
           req.user.name || req.user.displayName || "User"
         )}&email=${encodeURIComponent(req.user.email)}`
       );
     } catch (err) {
       console.error("Google callback error:", err);
-      res.redirect("http://localhost:3000/login?error=ServerError");
+      res.redirect("https://frontend-six-sooty-32.vercel.app/login?error=ServerError");
     }
   }
 );
